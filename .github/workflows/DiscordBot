@@ -1,0 +1,37 @@
+name: Discord Bot Workflow
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/10 * * * *' # Jede 10 Minuten ausführen
+
+jobs:
+  start-bot:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Discord Bot
+        working-directory: ./DiscordBot
+        run: npm run bot
+
+  deploy-commands:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy Commands
+        working-directory: ./DiscordBot
+        run: npm run deployCommands
