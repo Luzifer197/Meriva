@@ -35,3 +35,7 @@ li {
     border-radius: 4px;
     text-align: left;
 }
+
+.editable {
+    cursor: pointer;
+}
